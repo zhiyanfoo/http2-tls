@@ -5,8 +5,8 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"errors"
-	"os"
 	"log"
+	"os"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -17,6 +17,7 @@ import (
 const (
 	name = "servername.com"
 )
+
 func main() {
 	cert, err := tls.LoadX509KeyPair("cert/client.crt", "cert/client.key")
 	if err != nil {
@@ -24,8 +25,8 @@ func main() {
 	}
 
 	config := &tls.Config{
-		ServerName: name,
-		Certificates:       []tls.Certificate{cert},
+		ServerName:   name,
+		Certificates: []tls.Certificate{cert},
 	}
 
 	creds := credentials.NewTLS(config)
@@ -55,11 +56,11 @@ func main() {
 }
 
 func customCheck(cert *x509.Certificate, host string) error {
-    for _, sans := range cert.DNSNames {
-        if sans == host {
-            return nil
-        }
-    }
+	for _, sans := range cert.DNSNames {
+		if sans == host {
+			return nil
+		}
+	}
 
-    return errors.New("no valid SANs found")
+	return errors.New("no valid SANs found")
 }

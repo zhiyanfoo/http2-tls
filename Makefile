@@ -31,3 +31,6 @@ client-certs: client.crt client.key
 .PHONY: cert-check
 cert-check:
 	openssl s_client -connect localhost:50051 2>/dev/null | openssl x509 -text
+
+fmt:
+	gofmt -s -w .
