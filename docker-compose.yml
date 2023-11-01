@@ -8,6 +8,9 @@ services:
       - 50051:50051
     container_name: server
     pull_policy: always
+    environment:
+      - HTTP2_TLS_SERVER_ADDR=0.0.0.0
+
 
   client:
     build: 
@@ -15,3 +18,5 @@ services:
       dockerfile: docker/client/Dockerfile
     container_name: client
     pull_policy: always
+    environment:
+      - HTTP2_TLS_SERVER_NAME=server

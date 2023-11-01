@@ -50,7 +50,11 @@ func main() {
 
 	creds := credentials.NewTLS(config)
 
-	conn, err := grpc.Dial("server:50051",
+	serverName := os.Getenv("HTTP2_TLS_SERVER_NAME")
+	if serverName == "" {
+		serverName = "localhost"
+	}
+	conn, err := grpc.Dial(fmt.Sprintf("%s:50051", serverName),
 		grpc.WithTransportCredentials(creds),
 		grpc.WithAuthority(name),
 	)

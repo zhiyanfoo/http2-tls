@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+	"fmt"
 	"context"
 	"log"
 	"net"
@@ -25,7 +27,11 @@ func main() {
 		log.Fatalf("Failed to generate credentials %v", err)
 	}
 
-	addr := "0.0.0.0:50051"
+	serverAddr := os.Getenv("HTTP2_TLS_SERVER_ADDR")
+	if serverAddr == "" {
+		serverAddr = "localhost"
+	}
+	addr := fmt.Sprintf("%s:50051", serverAddr)
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
