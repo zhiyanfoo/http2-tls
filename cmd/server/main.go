@@ -25,7 +25,8 @@ func main() {
 		log.Fatalf("Failed to generate credentials %v", err)
 	}
 
-	lis, err := net.Listen("tcp", "localhost:50051")
+	addr := "0.0.0.0:50051"
+	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -33,7 +34,7 @@ func main() {
 	s := grpc.NewServer(grpc.Creds(creds))
 	echopb.RegisterEchoServiceServer(s, &server{})
 
-	log.Println("Server is running at localhost:50051")
+	log.Printf("Server is running at %s\n", addr)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

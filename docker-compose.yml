@@ -1,0 +1,17 @@
+version: '3'
+services:
+  server:
+    build: 
+      context: .
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - 50051:50051
+    container_name: server
+    pull_policy: always
+
+  client:
+    build: 
+      context: .
+      dockerfile: docker/client/Dockerfile
+    container_name: client
+    pull_policy: always
